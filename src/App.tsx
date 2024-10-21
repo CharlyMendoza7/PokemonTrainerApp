@@ -1,5 +1,6 @@
 import './App.css';
-
+import pokemonLogo from './assets/pokemonLogo.svg';
+import { LoginPage } from './Components/LoginPage';
 
 function App() {
 
@@ -7,8 +8,8 @@ function App() {
     <>
       <div className="welcome-container">
         <div className="welcome-box">
-          <h1>Welcome to PokemonTrainer</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci dolorem quis itaque voluptates at debitis facere, fugiat obcaecati quisquam animi? Sapiente et modi commodi harum, rerum hic cumque voluptate nobis.</p>
+          <h1 className='header'><img src={pokemonLogo} alt="Pokemon Logo" className='logo' /> Trainer</h1>
+          <LoginPage />
         </div>
       </div>
     </>
