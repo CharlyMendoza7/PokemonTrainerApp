@@ -23,3 +23,12 @@
     border-radius: 8px;
     cursor: pointer;
 }
+
+.register-button {
+    margin-top: 10px;
+    border-radius: 8px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+}
