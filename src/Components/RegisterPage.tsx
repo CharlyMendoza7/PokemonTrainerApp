@@ -17,7 +17,9 @@ export const RegisterPage = () => {
         birthDate: '',
         gender: '',
         userName: '',
-        email: ''
+        email: '',
+        password: '',
+        confirmPassword: '',
     });
 
     useEffect(() => {
@@ -114,6 +116,26 @@ export const RegisterPage = () => {
                             type='email'
                             name='email'
                             value={formData.email}
+                            onChange={handleChange}
+                        // required
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label>Password</label>
+                        <input
+                            type='password'
+                            name='password'
+                            value={formData.password}
+                            onChange={handleChange}
+                        // required
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label>Confirm Password</label>
+                        <input
+                            type='password'
+                            name='confirmPassword'
+                            value={formData.confirmPassword}
                             onChange={handleChange}
                         // required
                         />
