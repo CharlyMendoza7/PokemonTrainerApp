@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using PokemonTrainer.Data;
+using PokemonTrainer.Models;
 
 namespace PokemonTrainer.Controllers
 {
@@ -10,12 +13,13 @@ namespace PokemonTrainer.Controllers
         {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
-
+        private readonly PokemonTrainerDbContext _context;
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, PokemonTrainerDbContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -29,5 +33,11 @@ namespace PokemonTrainer.Controllers
             })
             .ToArray();
         }
+
+        //[HttpGet(Name = "GetUsers")]
+        //public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        //{
+        //    return await _context.Users.ToListAsync();
+        //}
     }
 }
