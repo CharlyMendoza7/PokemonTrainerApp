@@ -24,5 +24,13 @@ namespace PokemonTrainer.Controllers
 
             return Ok(users);
         }
+
+        [HttpGet("getUserLogin")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUserLogin(string username)
+        {
+            var user = await _context.Users.Where(x => x.UserName == username).FirstOrDefaultAsync();
+
+            return Ok(user);
+        }
     }
 }
