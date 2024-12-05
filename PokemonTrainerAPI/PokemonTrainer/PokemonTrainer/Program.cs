@@ -18,7 +18,21 @@ namespace PokemonTrainer
 
             builder.Services.AddDbContext<PokemonTrainerDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            //add CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigins", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
             var app = builder.Build();
+
+            //use CORS middleware
+            app.UseCors("AllosSpecificOrigins");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
