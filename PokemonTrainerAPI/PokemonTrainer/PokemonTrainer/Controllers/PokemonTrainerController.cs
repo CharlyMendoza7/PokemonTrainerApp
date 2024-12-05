@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PokemonTrainer.Data;
 using PokemonTrainer.Models;
@@ -7,6 +8,7 @@ namespace PokemonTrainer.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [EnableCors("AllowSpecificOrigins")]
     public class PokemonTrainerController : ControllerBase
     {
         private readonly PokemonTrainerDbContext _context;
