@@ -27,10 +27,12 @@ namespace PokemonTrainer.Controllers
             return Ok(users);
         }
 
-        [HttpGet("getUserLogin")]
-        public async Task<ActionResult<IEnumerable<User>>> GetUserLogin(string username)
+        [HttpGet("getUserLoginAccess")]
+        public async Task<ActionResult<IEnumerable<User>>> GetUserLogin(string username, string password)
         {
-            var user = await _context.Users.Where(x => x.UserName == username).FirstOrDefaultAsync();
+            var user = await _context.Users.Where(x => x.UserName == username && x.PasswordHash == password).FirstOrDefaultAsync();
+
+            if(user == null) { return Ok(false); }
 
             return Ok(user);
         }
