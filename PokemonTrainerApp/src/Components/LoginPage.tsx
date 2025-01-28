@@ -10,15 +10,16 @@ export const LoginPage = () => {
     const navigate = useNavigate();
     const { isAuthenticated, login } = useAuth();
 
-    const [first, setfirst] = useState([])
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleCreateNewAccountClick = () => {
         navigate('/register');
     }
 
-    const fetchUser = async () => {
+    const fetchUser = async (userName: string, password: string) => {
         try {
-            const response = await fetch("https://localhost:7032/api/PokemonTrainer/getUsers");
+            const response = await fetch(`https://localhost:7032/api/PokemonTrainer/getUserLoginAccess?username=${userName}&password=${password}`);
 
             if (!response.ok) {
                 throw new Error("HTTP ERROR MATE");
@@ -33,9 +34,14 @@ export const LoginPage = () => {
 
     const handleLoginClick = (e: React.FormEvent) => {
         e.preventDefault();
-        const x = fetchUser();
-        // setfirst([...first, x]);
+        // console.log(e);
+        const x = fetchUser(username, password);
         console.log(x);
+        if (!x) {
+            //handle error
+        } else {
+            login(username);
+        }
     }
 
     useEffect(() => {
@@ -48,17 +54,20 @@ export const LoginPage = () => {
         <div className="welcome-container">
             <div className="welcome-box">
                 <h1 className='header'><img src={pokemonLogo} alt="Pokemon Logo" className='logo' /> Trainer</h1>
-                <h2>{first}</h2>
                 <form className="login-form">
                     <input
                         type="text"
                         placeholder="Username"
                         className='login-input'
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                     />
                     <input
                         type="password"
                         placeholder="Password"
                         className='login-input'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <button
                         type="submit"
