@@ -12,6 +12,7 @@ export const LoginPage = () => {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('')
 
     const handleCreateNewAccountClick = () => {
         navigate('/register');
@@ -27,18 +28,23 @@ export const LoginPage = () => {
 
             const data = await response.json();
             console.log("User info is: ", data);
+            return data;
         } catch (error) {
-            console.error("Again mate error fetch", error)
+            console.error("Fetch error", error);
+            return false;
         }
     }
 
-    const handleLoginClick = (e: React.FormEvent) => {
+    const handleLoginClick = async (e: React.FormEvent) => {
         e.preventDefault();
         // console.log(e);
-        const x = fetchUser(username, password);
-        console.log(x);
-        if (!x) {
-            //handle error
+        setError('');
+
+        const result = await fetchUser(username, password);
+        console.log("Result from fetchUser: ", result);
+        if (!result) {
+            console.error("User/password is incorrect");
+            setError("User/password is incorrect");
         } else {
             login(username);
         }
@@ -69,6 +75,7 @@ export const LoginPage = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
+                    {error && <p className='error-message' style={{ color: 'red', textAlign: 'center', marginTop: '1px' }}>{error}</p>}
                     <button
                         type="submit"
                         className='login-button'
