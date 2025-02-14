@@ -29,3 +29,4 @@ dist-ssr
 *.user
 *.cache
 *.sln.docstates
+*.vsidx
