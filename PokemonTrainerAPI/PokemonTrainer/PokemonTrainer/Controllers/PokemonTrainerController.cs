@@ -34,7 +34,10 @@ namespace PokemonTrainer.Controllers
         [HttpGet("getUserLoginAccess")]
         public async Task<ActionResult<IEnumerable<User>>> GetUserLogin(string username, string password)
         {
-            var user = await _context.Users.Where(x => x.UserName == username && x.PasswordHash == password).FirstOrDefaultAsync();
+
+            var hashPassInserted = HashPasswordSHA256(password);
+
+            var user = await _context.Users.Where(x => x.UserName == username && x.PasswordHash == hashPassInserted).FirstOrDefaultAsync();
 
             if(user == null) { return Ok(false); }
 
