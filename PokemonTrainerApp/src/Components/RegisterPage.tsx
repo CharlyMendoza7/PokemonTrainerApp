@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/register.css';
 import { useEffect, useState } from 'react';
 import { useAuth } from './Authentication/AuthContext';
+import { RegisterModel } from './AppTypes';
 
 
 
@@ -38,12 +39,62 @@ export const RegisterPage = () => {
         });
     }
 
-    // const registerUser = async (formData)
+    const registerUser = async (model: RegisterModel) => {
+        try {
+            const response = await fetch("http://localhost:7032/api/PokemonTrainer/registerNewUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(model),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log("User registered successfully: ", result);
+
+            return result;
+        } catch (error) {
+            console.error("Error registering user: ", error);
+        }
+
+    }
 
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        login(formData.userName)
+
+        if (formData.password !== formData.confirmPassword) {
+            console.error("Passwords do not match");
+            return;
+        }
+
+        try {
+            const userModel: RegisterModel = {
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                birth: new Date(formData.birthDate),
+                userName: formData.userName,
+                gender: formData.gender,
+                email: formData.email,
+                password: formData.password
+            }
+
+            const result = await registerUser(userModel);
+
+            if (result) {
+                console.log("Registration successful, logging in...");
+                login(formData.userName);
+                navigate("/"); //check this
+            } else {
+                console.error("Registration failed.")
+            }
+        } catch (error) {
+            console.error("Error during registration:", error);
+        }
 
     }
 
