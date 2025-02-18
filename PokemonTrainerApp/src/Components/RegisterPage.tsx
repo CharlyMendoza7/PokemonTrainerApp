@@ -38,6 +38,8 @@ export const RegisterPage = () => {
         });
     }
 
+    // const registerUser = async (formData)
+
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
