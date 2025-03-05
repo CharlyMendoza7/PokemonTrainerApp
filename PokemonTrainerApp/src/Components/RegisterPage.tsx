@@ -23,6 +23,8 @@ export const RegisterPage = () => {
         confirmPassword: '',
     });
 
+    const [passWordNotMatched, setPassWordNotMatched] = useState('');
+
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/', { replace: true })
@@ -41,7 +43,7 @@ export const RegisterPage = () => {
 
     const registerUser = async (model: RegisterModel) => {
         try {
-            const response = await fetch("http://localhost:7032/api/PokemonTrainer/registerNewUser", {
+            const response = await fetch("https://localhost:7032/api/PokemonTrainer/registerNewUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -69,19 +71,23 @@ export const RegisterPage = () => {
 
         if (formData.password !== formData.confirmPassword) {
             console.error("Passwords do not match");
+            setPassWordNotMatched('Passwords do not match.')
             return;
         }
 
+        setPassWordNotMatched('');
         try {
             const userModel: RegisterModel = {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
-                birth: new Date(formData.birthDate),
+                birth: new Date(formData.birthDate).toISOString(),
                 userName: formData.userName,
                 gender: formData.gender,
                 email: formData.email,
-                password: formData.password
+                passwordHash: formData.password
             }
+
+            console.log(userModel);
 
             const result = await registerUser(userModel);
 
@@ -136,7 +142,7 @@ export const RegisterPage = () => {
                             value={formData.birthDate}
                             onChange={handleChange}
                             max={minDateString} //Restriction to 6 years or older
-                        // required
+                            required
                         />
                     </div>
                     <div className='form-group'>
@@ -170,7 +176,7 @@ export const RegisterPage = () => {
                             name='email'
                             value={formData.email}
                             onChange={handleChange}
-                        // required
+                            required
                         />
                     </div>
                     <div className='form-group'>
@@ -180,7 +186,7 @@ export const RegisterPage = () => {
                             name='password'
                             value={formData.password}
                             onChange={handleChange}
-                        // required
+                            required
                         />
                     </div>
                     <div className='form-group'>
@@ -190,8 +196,9 @@ export const RegisterPage = () => {
                             name='confirmPassword'
                             value={formData.confirmPassword}
                             onChange={handleChange}
-                        // required
+                            required
                         />
+                        <p style={{ color: 'red' }}>{passWordNotMatched}</p>
                     </div>
                     <button type='submit'>Register</button>
                 </form>

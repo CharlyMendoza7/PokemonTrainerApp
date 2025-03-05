@@ -30,3 +30,7 @@ dist-ssr
 *.cache
 *.sln.docstates
 *.vsidx
+
+# Ignore .NET build artifacts
+**/bin/
+**/obj/

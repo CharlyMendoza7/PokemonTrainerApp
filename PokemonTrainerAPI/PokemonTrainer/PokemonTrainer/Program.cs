@@ -32,7 +32,7 @@ namespace PokemonTrainer
             var app = builder.Build();
 
             //use CORS middleware
-            app.UseCors("AllosSpecificOrigins");
+            app.UseCors("AllowSpecificOrigins");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

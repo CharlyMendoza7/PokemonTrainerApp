@@ -52,7 +52,12 @@ namespace PokemonTrainer.Controllers
                 return BadRequest(HttpStatusCode.BadRequest);
             }
 
+            try
+            {
+
             string hashedPassword = HashPasswordSHA256(user.PasswordHash);
+
+
             var model = new User
             {
                 UserName = user.UserName,
@@ -68,6 +73,10 @@ namespace PokemonTrainer.Controllers
             await _context.Users.AddAsync(model);
             await _context.SaveChangesAsync();
             return Ok(user);
+            }catch(Exception e)
+            {
+                return StatusCode(405, "the error is: " + e.Message);
+            }
         }
 
         private string HashPasswordSHA256(string password)

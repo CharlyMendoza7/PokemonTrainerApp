@@ -1,8 +1,8 @@
 export type RegisterModel = {
     userName: string;
-    password: string;
+    passwordHash: string;
     email: string;
-    birth: Date;
+    birth: string;
     firstName: string | null;
     lastName: string | null;
     gender: string | null;
