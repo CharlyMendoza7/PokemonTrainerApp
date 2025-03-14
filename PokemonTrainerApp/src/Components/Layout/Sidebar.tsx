@@ -18,27 +18,27 @@ export const Sidebar = () => {
 
             {/* Navigation Menu */}
             <nav className="menu">
-                <NavLink to="/">
-                    <FaHome /><span>Your Pokémon Team</span>
+                <NavLink to="/" className="menu-item">
+                    <FaHome className="icon" /><span>Your Pokémon Team</span>
                 </NavLink>
-                <NavLink to="/storage">
-                    <FaBox /><span>Pokémon Storage</span>
+                <NavLink to="/storage" className="menu-item">
+                    <FaBox className="icon" /><span>Pokémon Storage</span>
                 </NavLink>
-                <NavLink to="/pokedex">
-                    <MdCatchingPokemon /><span>Pokédex</span>
+                <NavLink to="/pokedex" className="menu-item">
+                    <MdCatchingPokemon className="icon" /><span>Pokédex</span>
                 </NavLink>
-                <NavLink to="/wiki">
-                    <FaBook /><span>Wiki</span>
+                <NavLink to="/wiki" className="menu-item">
+                    <FaBook className="icon" /><span>Wiki</span>
                 </NavLink>
-                <NavLink to="battles">
-                    <FaGamepad /> <span>Battle Center</span>
+                <NavLink to="battles" className="menu-item">
+                    <FaGamepad className="icon" /> <span>Battle Center</span>
                 </NavLink>
             </nav>
 
             {/* Settings at the bottom */}
-            <div>
-                <NavLink to="/settings">
-                    <FaCog /><span>Settings</span>
+            <div className="menu-bottom">
+                <NavLink to="/settings" className="menu-item">
+                    <FaCog className="icon" /><span>Settings</span>
                 </NavLink>
             </div>
         </div>
