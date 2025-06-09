@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonTrainer", "PokemonTrainer\PokemonTrainer.csproj", "{5889452D-7CD6-4A02-AB9D-CD8B558A6CEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PokemonTrainer.Infrastructure", "PokemonTrainer.Infrastructure\PokemonTrainer.Infrastructure.csproj", "{5889452D-7CD6-4A02-AB9D-CD8B558A6CEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonTrainer.Domain", "PokemonTrainer.Domain\PokemonTrainer.Domain.csproj", "{B808E0E0-B628-49F5-8184-2CB4E02CBCF0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonTrainer.Application", "PokemonTrainer.Application\PokemonTrainer.Application.csproj", "{F9C812F8-D15B-4DED-973A-9B191A833D14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PokemonTrainer.API", "PokemonTrainer.API\PokemonTrainer.API.csproj", "{8E8A3692-7570-479D-B756-D9367D3D17B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{5889452D-7CD6-4A02-AB9D-CD8B558A6CEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5889452D-7CD6-4A02-AB9D-CD8B558A6CEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5889452D-7CD6-4A02-AB9D-CD8B558A6CEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B808E0E0-B628-49F5-8184-2CB4E02CBCF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B808E0E0-B628-49F5-8184-2CB4E02CBCF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B808E0E0-B628-49F5-8184-2CB4E02CBCF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B808E0E0-B628-49F5-8184-2CB4E02CBCF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9C812F8-D15B-4DED-973A-9B191A833D14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9C812F8-D15B-4DED-973A-9B191A833D14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9C812F8-D15B-4DED-973A-9B191A833D14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9C812F8-D15B-4DED-973A-9B191A833D14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E8A3692-7570-479D-B756-D9367D3D17B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E8A3692-7570-479D-B756-D9367D3D17B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E8A3692-7570-479D-B756-D9367D3D17B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E8A3692-7570-479D-B756-D9367D3D17B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

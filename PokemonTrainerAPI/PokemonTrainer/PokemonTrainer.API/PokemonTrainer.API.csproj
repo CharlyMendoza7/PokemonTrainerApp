@@ -10,4 +10,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\PokemonTrainer.Domain.csproj" />
+    <ProjectReference Include="..\PokemonTrainer.Application\PokemonTrainer.Application.csproj" />
+    <ProjectReference Include="..\PokemonTrainer\PokemonTrainer.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
