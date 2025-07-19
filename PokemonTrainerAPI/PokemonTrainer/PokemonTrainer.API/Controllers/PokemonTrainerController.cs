@@ -1,14 +1,8 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using PokemonTrainer.Application.DTOs;
 using PokemonTrainer.Application.UseCases;
-using PokemonTrainer.Data;
-using PokemonTrainer.Models;
-using System.Net;
-using System.Security.Cryptography;
-using System.Text;
+
 
 namespace PokemonTrainer.API.Controllers
 {

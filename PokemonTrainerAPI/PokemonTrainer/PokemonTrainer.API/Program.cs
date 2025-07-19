@@ -1,5 +1,4 @@
 
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using PokemonTrainer.Application.UseCases;
 using PokemonTrainer.Domain.Interfaces;
