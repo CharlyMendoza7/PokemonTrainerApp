@@ -8,9 +8,9 @@ namespace PokemonTrainer.Domain.Entities
     {
         public int UserID { get; set; }
         public string UserName { get; set; }
-        public string? FirstName {  get; set; }
+        public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public DateTime? Birth {  get; set; }
+        public DateTime? Birth { get; set; }
         public string? Gender { get; set; }
         public string Email { get; set; }
         public string? PasswordHash { get; set; }
@@ -21,9 +21,11 @@ namespace PokemonTrainer.Domain.Entities
             PasswordHash = hasher.Hash(rawPassword);
         }
 
-        public bool IsPasswordValid(string rawPassword, IPasswordHasher hasher){
+        public bool IsPasswordValid(string rawPassword, IPasswordHasher hasher)
         {
-                return PasswordHash == hasher.Hash(rawPassword);    
+            {
+                return PasswordHash == hasher.Hash(rawPassword);
+            }
         }
     }
 }
