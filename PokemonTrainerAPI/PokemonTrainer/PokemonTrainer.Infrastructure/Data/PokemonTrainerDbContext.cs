@@ -13,5 +13,7 @@ namespace PokemonTrainer.Infrastructure.Data
         //}
 
         public DbSet<User> Users { get; set; }
+        public DbSet<TrainerProfile> TrainerProfiles { get; set; }
+        public DbSet<Pokemon> Pokemons { get; set; }
     }
 }

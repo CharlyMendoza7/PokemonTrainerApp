@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Cors;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PokemonTrainer.Application.DTOs;
 using PokemonTrainer.Application.UseCases;
@@ -23,7 +24,7 @@ namespace PokemonTrainer.API.Controllers
 
         }
 
-
+        [Authorize]
         [HttpGet("getUsers")]
         public async Task<IActionResult> GetUsers()
         {
@@ -32,13 +33,13 @@ namespace PokemonTrainer.API.Controllers
             return Ok(users);
         }
 
+        [AllowAnonymous]
         [HttpGet("getUserLoginAccess")]
         public async Task<IActionResult> GetUserLogin(string username, string password)
         {
+            var authenticatedUser = await _authenticateUserUseCase.ExecuteAsync(username, password);
 
-            var user = await _authenticateUserUseCase.ExecuteAsync(username, password);
-
-            return user != null ? Ok(user) : Unauthorized();
+            return authenticatedUser != null ? Ok(authenticatedUser) : Unauthorized("SOOOOOOOORRY");
         }
 
         [HttpPost("registerNewUser")]

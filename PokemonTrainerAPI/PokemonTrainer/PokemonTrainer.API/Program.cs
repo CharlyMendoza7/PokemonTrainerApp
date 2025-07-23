@@ -1,10 +1,14 @@
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using PokemonTrainer.Application.UseCases;
 using PokemonTrainer.Domain.Interfaces;
 using PokemonTrainer.Infrastructure.Data;
 using PokemonTrainer.Infrastructure.Repositories;
 using PokemonTrainer.Infrastructure.Services;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using PokemonTrainer.Infrastructure.Security;
 
 namespace PokemonTrainer.Api
 {
@@ -14,7 +18,32 @@ namespace PokemonTrainer.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
+            var config = builder.Configuration;
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = config["Jwt:Issuer"],
+
+                    ValidateAudience = true,
+                    ValidAudience = config["Jwt:Audience"],
+
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(config["Jwt:Key"] ?? throw new Exception("JWT Key missing"))
+                    )
+                };
+            });
+
+                // Add services to the container.
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -28,6 +57,7 @@ namespace PokemonTrainer.Api
             builder.Services.AddScoped<RegisterUserUseCase>();
             builder.Services.AddScoped<AuthenticateUserUseCase>();
             builder.Services.AddScoped<GetAllUsersUseCase>();
+            builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
             //add CORS
             builder.Services.AddCors(options =>
@@ -41,6 +71,9 @@ namespace PokemonTrainer.Api
             });
 
             var app = builder.Build();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             //use CORS middleware
             app.UseCors("AllowSpecificOrigins");
