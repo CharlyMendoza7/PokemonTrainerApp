@@ -9,6 +9,9 @@ using PokemonTrainer.Infrastructure.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using PokemonTrainer.Infrastructure.Security;
+using FluentValidation;
+using PokemonTrainer.Application.DTOs;
+using PokemonTrainer.Application.Validators;
 
 namespace PokemonTrainer.Api
 {
@@ -52,6 +55,8 @@ namespace PokemonTrainer.Api
 
             builder.Services.AddDbContext<PokemonTrainerDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IPasswordHasher, Sha256PasswordHasher>();
             builder.Services.AddScoped<RegisterUserUseCase>();
@@ -59,6 +64,9 @@ namespace PokemonTrainer.Api
             builder.Services.AddScoped<GetAllUsersUseCase>();
             builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             builder.Services.AddScoped<IFavoritePokemonRepository, FavoritePokemonRepository>();
+
+            //validators
+            builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 
             //add CORS
             builder.Services.AddCors(options =>

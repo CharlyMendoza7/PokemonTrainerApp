@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PokemonTrainer.Application.DTOs;
@@ -39,12 +40,19 @@ namespace PokemonTrainer.API.Controllers
         {
             var authenticatedUser = await _authenticateUserUseCase.ExecuteAsync(username, password);
 
-            return authenticatedUser != null ? Ok(authenticatedUser) : Unauthorized("SOOOOOOOORRY");
+            return authenticatedUser != null ? Ok(authenticatedUser) : Unauthorized();
         }
 
         [HttpPost("registerNewUser")]
-        public async Task<IActionResult> Register([FromBody] RegisterUserDto dto)
+        public async Task<IActionResult> Register([FromBody] RegisterUserDto dto, [FromServices] IValidator<RegisterUserDto> validator)
         {
+            var validationResult = await validator.ValidateAsync(dto);
+
+            if (!validationResult.IsValid)
+            {
+                return BadRequest(validationResult.Errors);
+            }
+
             bool result = await _registerUserUseCase.ExecuteAsync(dto);
 
             return result ? Ok(result) : BadRequest("Invalid or duplicate user.");
