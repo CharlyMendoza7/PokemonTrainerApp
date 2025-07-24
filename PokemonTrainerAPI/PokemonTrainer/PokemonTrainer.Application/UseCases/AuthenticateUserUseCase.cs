@@ -19,14 +19,11 @@ namespace PokemonTrainer.Application.UseCases
 
         public async Task<AuthenticatedUserDto?> ExecuteAsync(string username, string rawPassword)
         {
-            Console.WriteLine("username is: ", username);
-            Console.WriteLine("rawpassword is: ", rawPassword);
+
             var user = await _repo.GetByUsernameAsync(username);
             if (user == null) return null;
 
-            Console.WriteLine("user is: ", user);
             var hash = _passwordHasher.Hash(rawPassword);
-            Console.WriteLine("hashpassword is: ", hash);
             if (user.PasswordHash != hash) return null;
 
             string token = _jwtGenerator.GenerateToken(user.UserID, user.UserName, user.Permission);

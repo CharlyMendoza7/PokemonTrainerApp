@@ -16,6 +16,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\PokemonTrainer.Application\PokemonTrainer.Application.csproj" />
 		<ProjectReference Include="..\PokemonTrainer.Domain\PokemonTrainer.Domain.csproj" />
 	</ItemGroup>
 

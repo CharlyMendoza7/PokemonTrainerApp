@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PokemonTrainer.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using PokemonTrainer.Infrastructure.Data;
 namespace PokemonTrainer.Infrastructure.Migrations
 {
     [DbContext(typeof(PokemonTrainerDbContext))]
-    partial class PokemonTrainerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250723235131_AddTrainerFavoritePokemons")]
+    partial class AddTrainerFavoritePokemons
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

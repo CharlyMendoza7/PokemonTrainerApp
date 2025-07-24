@@ -58,6 +58,7 @@ namespace PokemonTrainer.Api
             builder.Services.AddScoped<AuthenticateUserUseCase>();
             builder.Services.AddScoped<GetAllUsersUseCase>();
             builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            builder.Services.AddScoped<IFavoritePokemonRepository, FavoritePokemonRepository>();
 
             //add CORS
             builder.Services.AddCors(options =>
