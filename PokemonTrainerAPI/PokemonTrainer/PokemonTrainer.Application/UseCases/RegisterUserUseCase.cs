@@ -7,13 +7,15 @@ namespace PokemonTrainer.Application.UseCases
 {
     public class RegisterUserUseCase
     {
-        private readonly IUserRepository _repo;
+        private readonly IUserRepository _userRepository;
         private readonly IPasswordHasher _hasher;
+        private readonly ITrainerProfileRepository _trainerProfileRepository;
 
-        public RegisterUserUseCase(IUserRepository repo, IPasswordHasher hasher)
+        public RegisterUserUseCase(IUserRepository repo, IPasswordHasher hasher, ITrainerProfileRepository trainerProfileRepository)
         {
-            _repo = repo;
+            _userRepository = repo;
             _hasher = hasher;
+            _trainerProfileRepository = trainerProfileRepository;
         }
 
         public async Task<bool> ExecuteAsync(RegisterUserDto dto)
@@ -23,7 +25,7 @@ namespace PokemonTrainer.Application.UseCases
                 return false;
             }
 
-            var existingUser = await _repo.GetByUsernameAsync(dto.UserName);
+            var existingUser = await _userRepository.GetByUsernameAsync(dto.UserName);
             if (existingUser != null) return false;
 
             var user = new User 
@@ -39,8 +41,21 @@ namespace PokemonTrainer.Application.UseCases
 
             user.SetPassword(dto.Password, _hasher);
 
-            await _repo.AddAsync(user);
-            await _repo.SaveChangesAsync();
+            await _userRepository.AddAsync(user);
+            await _userRepository.SaveChangesAsync();
+
+            //create profile
+            var profile = new TrainerProfile
+            {
+                UserId = user.UserID,
+                DisplayName = user.UserName,
+                Region = "Kanto", //TODO: default kanto for now but allow to chose later
+                CreatedAt = DateTime.UtcNow,
+                LastActive = DateTime.UtcNow,
+            };
+
+            await _trainerProfileRepository.AddAsync(profile);
+            await _trainerProfileRepository.SaveChangesAsync();
 
             return true;
         }

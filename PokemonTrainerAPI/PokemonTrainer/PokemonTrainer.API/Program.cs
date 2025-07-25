@@ -56,9 +56,12 @@ namespace PokemonTrainer.Api
             builder.Services.AddDbContext<PokemonTrainerDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
-
+            //Repository DI
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IPasswordHasher, Sha256PasswordHasher>();
+            builder.Services.AddScoped<ITrainerProfileRepository, TrainerProfileRepository>();
+            
+
             builder.Services.AddScoped<RegisterUserUseCase>();
             builder.Services.AddScoped<AuthenticateUserUseCase>();
             builder.Services.AddScoped<GetAllUsersUseCase>();
