@@ -5,32 +5,38 @@ import { PrivateRoute } from "./PrivateRoute"
 import { HomePage } from "../HomePage"
 import { useAuth } from "../Authentication/AuthContext"
 import { Sidebar } from "../Layout/Sidebar"
+import { PokedexPage } from "../Pokedex/PokedexPage"
+import { ProfilePage } from "../Profile/ProfilePage"
 
 export const MainRouting = () => {
 
     const { isAuthenticated } = useAuth();
 
     return (
-        <div>
+        <div className="app-layout">
             {isAuthenticated && <Sidebar />}
-            <Routes>
-                {/* Public routes */}
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
+            <div className="main-content">
+                <Routes>
+                    {/* Public routes */}
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
 
-                {/* Protected Routes */}
-                <Route element={<PrivateRoute />}>
-                    <Route path='/home' element={<HomePage />} />
-                </Route>
+                    {/* Protected Routes */}
+                    <Route element={<PrivateRoute />}>
+                        <Route path='/home' element={<HomePage />} />
+                        <Route path='/pokedex' element={<PokedexPage />} />
+                        <Route path='/profile' element={<ProfilePage />} />
+                    </Route>
 
-                <Route
-                    path='/*'
-                    element={
-                        isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />
-                    }
-                />
+                    <Route
+                        path='/*'
+                        element={
+                            isAuthenticated ? <Navigate to="/home" /> : <Navigate to="/login" />
+                        }
+                    />
 
-            </Routes>
+                </Routes>
+            </div>
         </div>
     )
 }
