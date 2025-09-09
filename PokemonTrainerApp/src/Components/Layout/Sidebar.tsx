@@ -1,10 +1,15 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import pokemonLogo from "../../assets/pokemonLogo.svg"
 import { FaBook, FaBox, FaCog, FaGamepad, FaHome } from "react-icons/fa"
 import { MdCatchingPokemon } from "react-icons/md"
 import '../../styles/sidebar.css'
+import { useAuth } from "../Authentication/AuthContext"
 
 export const Sidebar = () => {
+
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+
     return (
         <div className="sidebar">
             {/* Logo */}
@@ -40,6 +45,15 @@ export const Sidebar = () => {
                 <NavLink to="/settings" className="menu-item">
                     <FaCog className="icon" /><span>Settings</span>
                 </NavLink>
+            </div>
+            {/* logout at the bottom */}
+            <div className="menu-bottom">
+                <button className="menu-item" onClick={() => {
+                    logout();
+                    navigate("/login");
+                }}>
+                    <FaCog className="icon" /><span>Logout</span>
+                </button>
             </div>
         </div>
     )
