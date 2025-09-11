@@ -8,13 +8,11 @@ namespace PokemonTrainer.Application.UseCases
     {
         private readonly IUserRepository _repo;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly IJwtTokenGenerator _jwtGenerator;
 
-        public AuthenticateUserUseCase(IUserRepository repo, IPasswordHasher passwordHasher, IJwtTokenGenerator jwtTokenGenerator)
+        public AuthenticateUserUseCase(IUserRepository repo, IPasswordHasher passwordHasher)
         {
             _repo = repo;
             _passwordHasher = passwordHasher;
-            _jwtGenerator = jwtTokenGenerator;
         }
 
         public async Task<AuthenticatedUserDto?> ExecuteAsync(string username, string rawPassword)
@@ -26,12 +24,11 @@ namespace PokemonTrainer.Application.UseCases
             var hash = _passwordHasher.Hash(rawPassword);
             if (user.PasswordHash != hash) return null;
 
-            string token = _jwtGenerator.GenerateToken(user.UserID, user.UserName, user.Permission);
-
             return new AuthenticatedUserDto
             {
-                Token = token,
-                UserName = user.UserName
+                Id = user.UserID,
+                UserName = user.UserName,
+                Role = user.Permission
             };
         }
     }

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using PokemonTrainer.Application.DTOs;
 using PokemonTrainer.Application.UseCases;
-
+using PokemonTrainer.Domain.Interfaces;
 
 namespace PokemonTrainer.API.Controllers
 {
@@ -16,13 +16,14 @@ namespace PokemonTrainer.API.Controllers
         private readonly RegisterUserUseCase _registerUserUseCase;
         private readonly AuthenticateUserUseCase _authenticateUserUseCase;
         private readonly GetAllUsersUseCase _getAllUsersUseCase;
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-        public PokemonTrainerController(RegisterUserUseCase registerUserUseCase, AuthenticateUserUseCase authenticateUserUseCase, GetAllUsersUseCase getAllUsersUseCase)
+        public PokemonTrainerController(RegisterUserUseCase registerUserUseCase, AuthenticateUserUseCase authenticateUserUseCase, GetAllUsersUseCase getAllUsersUseCase, IJwtTokenGenerator jwtTokenGenerator)
         {
             _registerUserUseCase = registerUserUseCase;
             _authenticateUserUseCase = authenticateUserUseCase;
             _getAllUsersUseCase = getAllUsersUseCase;
-
+            _jwtTokenGenerator = jwtTokenGenerator;
         }
 
         [Authorize]
@@ -40,7 +41,20 @@ namespace PokemonTrainer.API.Controllers
         {
             var authenticatedUser = await _authenticateUserUseCase.ExecuteAsync(username, password);
 
-            return authenticatedUser != null ? Ok(authenticatedUser) : Unauthorized();
+            if(authenticatedUser == null)
+            {
+                return Unauthorized();
+            }
+
+            var token = _jwtTokenGenerator.GenerateToken(authenticatedUser.Id, authenticatedUser.UserName, authenticatedUser.Role);
+
+            return Ok(new
+            {
+                token,
+                username = authenticatedUser.UserName,
+                userId = authenticatedUser.Id,
+                role = authenticatedUser.Role
+            });
         }
 
         [HttpPost("registerNewUser")]
