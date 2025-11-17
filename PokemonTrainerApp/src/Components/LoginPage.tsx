@@ -20,7 +20,7 @@ export const LoginPage = () => {
 
     const fetchUser = async (userName: string, password: string) => {
         try {
-            const response = await fetch(`https://localhost:7032/api/PokemonTrainer/getUserLoginAccess?username=${userName}&password=${password}`);
+            const response = await fetch(`https://localhost:7022/api/PokemonTrainer/getUserLoginAccess?username=${userName}&password=${password}`);
 
             if (!response.ok) {
                 throw new Error("HTTP ERROR MATE");
@@ -46,7 +46,7 @@ export const LoginPage = () => {
             console.error("User/password is incorrect");
             setError("User/password is incorrect");
         } else {
-            login(username);
+            login(result.username, result.token, result.userId, result.role);
         }
     }
 

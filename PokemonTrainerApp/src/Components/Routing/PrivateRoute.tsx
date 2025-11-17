@@ -4,7 +4,13 @@ import { useAuth } from "../Authentication/AuthContext";
 
 export const PrivateRoute = () => {
 
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, isAuthLoading } = useAuth();
+
+    console.log('Private Route: ', { isAuthenticated, isAuthLoading })
+
+    if (isAuthLoading) {
+        return <div>Loading...</div>
+    }
 
     return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />
 }

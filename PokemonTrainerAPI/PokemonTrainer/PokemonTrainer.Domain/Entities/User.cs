@@ -21,6 +21,7 @@ namespace PokemonTrainer.Domain.Entities
             PasswordHash = hasher.Hash(rawPassword);
         }
 
+        //TODO: USE THIS IS PASSWORD VALID FOR VALIDATION
         public bool IsPasswordValid(string rawPassword, IPasswordHasher hasher)
         {
             {

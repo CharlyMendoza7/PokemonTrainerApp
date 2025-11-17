@@ -10,7 +10,10 @@ import { ProfilePage } from "../Profile/ProfilePage"
 
 export const MainRouting = () => {
 
-    const { isAuthenticated } = useAuth();
+    const { isAuthenticated, isAuthLoading } = useAuth();
+
+    console.log('Main Routing: ', { isAuthenticated, isAuthLoading })
+    if (isAuthLoading) return <div>Loading...</div>
 
     return (
         <div className="app-layout">
