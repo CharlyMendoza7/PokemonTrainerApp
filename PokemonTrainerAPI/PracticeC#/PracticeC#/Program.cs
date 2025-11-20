@@ -1,21 +1,16 @@
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using PracticeC_.Repository;
+using PracticeC_.Repository.Interfaces;
 
-using PracticeC_.Consumers;
-using PracticeC_.Implementations;
-using PracticeC_.Services;
+var builder = WebApplication.CreateBuilder(args);
 
-namespace PracticeC_
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            NotificationManager notif = new NotificationManager(new EmailNotificacionService(), new ConsoleLogger());
+builder.Services.AddSingleton<IPokemonRepository, PokemonRepository>();
+builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddControllers();
 
-            notif.NotifyUser("carlos", "Hello my friend");
+var app = builder.Build();
 
-            notif.NotifyUser("david", "are  youi there");
+app.MapControllers();
 
-        }
-
-    }
-}
+app.Run();

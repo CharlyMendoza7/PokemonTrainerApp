@@ -7,18 +7,20 @@ import { useAuth } from "../Authentication/AuthContext"
 import { Sidebar } from "../Layout/Sidebar"
 import { PokedexPage } from "../Pokedex/PokedexPage"
 import { ProfilePage } from "../Profile/ProfilePage"
+import { useState } from "react"
 
 export const MainRouting = () => {
 
     const { isAuthenticated, isAuthLoading } = useAuth();
+    const [sidebarOpen, setSideBarOpen] = useState(false);
 
     console.log('Main Routing: ', { isAuthenticated, isAuthLoading })
     if (isAuthLoading) return <div>Loading...</div>
 
     return (
         <div className="app-layout">
-            {isAuthenticated && <Sidebar />}
-            <div className="main-content">
+            {isAuthenticated && <Sidebar isOpen={sidebarOpen} setIsOpen={setSideBarOpen} />}
+            <div className={`main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
                 <Routes>
                     {/* Public routes */}
                     <Route path="/login" element={<LoginPage />} />
