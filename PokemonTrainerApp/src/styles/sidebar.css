@@ -14,7 +14,7 @@
     overflow-y: auto;
     box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
     transform: translateX(0);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     z-index: 1500;
 }
 
@@ -95,7 +95,21 @@
     }
 
     .sidebar.open {
-        transform: translateX(0);
+        animation: pokeSlide 0.45s ease forwards;
+    }
+
+    @keyframes pokeSlide {
+        0% {
+            transform: translateX(-100%);
+        }
+
+        80% {
+            transform: translateX(5%);
+        }
+
+        100% {
+            transform: translateX(0);
+        }
     }
 
     /* .sidebar-toggle {
@@ -144,4 +158,22 @@
         font-size: 24px;
         cursor: pointer;
     }
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1400;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(2px);
+    opacity: 1;
+    transition: opacity 0.3 ease;
+}
+
+.sidebar-overlay.hide {
+    opacity: 0;
+    pointer-events: none;
 }

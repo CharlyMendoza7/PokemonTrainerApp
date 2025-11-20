@@ -20,6 +20,11 @@ export const MainRouting = () => {
     return (
         <div className="app-layout">
             {isAuthenticated && <Sidebar isOpen={sidebarOpen} setIsOpen={setSideBarOpen} />}
+            {isAuthenticated && sidebarOpen && (
+                <div className={`sidebar-overlay ${sidebarOpen ? "" : "hide"}`}
+                    onClick={() => setSideBarOpen(false)}
+                />
+            )}
             <div className={`main-content ${sidebarOpen ? "sidebar-open" : ""}`}>
                 <Routes>
                     {/* Public routes */}
